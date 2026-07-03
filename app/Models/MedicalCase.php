@@ -18,9 +18,10 @@ class MedicalCase extends Model
     protected function casts(): array
     {
         return [
-            'opened_at' => 'datetime',
-            'closed_at' => 'datetime',
+            'opened_at'            => 'datetime',
+            'closed_at'            => 'datetime',
             'expected_return_date' => 'date',
+            'diagnosis_notes'      => 'encrypted',
         ];
     }
 }
