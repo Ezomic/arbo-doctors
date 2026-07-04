@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MedicalCase;
 use App\Models\User;
 use App\Services\CaseOfficersClient;
+use App\Services\NoteTypeSyncService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,48 @@ class MedicalCaseController extends Controller
         return Inertia::render('medical-cases/Index', [
             'medicalCases' => $medicalCases,
             'openCases' => $openCases,
+        ]);
+    }
+
+    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync): Response
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $noteTypes = $noteTypeSync->sync($user->tenant_id);
+        $userRole  = $user->current_role ?? '';
+
+        $readableTypeIds = $noteTypes
+            ->filter(fn ($nt) => $nt->permissionFor($userRole)?->can_read === true)
+            ->pluck('id');
+
+        $writableNoteTypes = $noteTypes
+            ->filter(fn ($nt) => $nt->permissionFor($userRole)?->can_write === true)
+            ->map(fn ($nt) => ['id' => $nt->id, 'name' => $nt->name]);
+
+        $notes = $medicalCase->notes()
+            ->with(['noteType:id,name', 'author:id,name'])
+            ->where(fn ($q) => $q
+                ->whereIn('note_type_id', $readableTypeIds)
+                ->orWhere('user_id', $user->id)
+            )
+            ->latest()
+            ->get()
+            ->map(fn ($note) => [
+                'id'             => $note->id,
+                'note_type_id'   => $note->note_type_id,
+                'note_type_name' => $note->noteType->name,
+                'body'           => $note->body,
+                'author_name'    => $note->author->name,
+                'is_mine'        => $note->user_id === $user->id,
+                'can_update'     => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_update === true,
+                'can_delete'     => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_delete === true,
+                'created_at'     => $note->created_at,
+            ]);
+
+        return Inertia::render('medical-cases/Show', [
+            'medicalCase'      => $medicalCase,
+            'notes'            => $notes,
+            'writableNoteTypes'=> $writableNoteTypes->values(),
         ]);
     }
 

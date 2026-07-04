@@ -24,4 +24,12 @@ class MedicalCase extends Model
             'diagnosis_notes'      => 'encrypted',
         ];
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<MedicalNote, $this>
+     */
+    public function notes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MedicalNote::class);
+    }
 }

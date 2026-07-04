@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 const SsoCallbackController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ SsoCallbackController.definition = {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 SsoCallbackController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ SsoCallbackController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 SsoCallbackController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ SsoCallbackController.get = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 SsoCallbackController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ SsoCallbackController.head = (options?: RouteQueryOptions): RouteDefinition<'hea
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 const SsoCallbackControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const SsoCallbackControllerForm = (options?: RouteQueryOptions): RouteFormDefini
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 SsoCallbackControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ SsoCallbackControllerForm.get = (options?: RouteQueryOptions): RouteFormDefiniti
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\SsoCallbackController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/SsoCallbackController.php:26
 * @route '/sso/callback'
 */
 SsoCallbackControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

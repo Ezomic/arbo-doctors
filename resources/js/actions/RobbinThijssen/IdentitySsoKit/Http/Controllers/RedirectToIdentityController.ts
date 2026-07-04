@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 const RedirectToIdentityController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ RedirectToIdentityController.definition = {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 RedirectToIdentityController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ RedirectToIdentityController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 RedirectToIdentityController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ RedirectToIdentityController.get = (options?: RouteQueryOptions): RouteDefinitio
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 RedirectToIdentityController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ RedirectToIdentityController.head = (options?: RouteQueryOptions): RouteDefiniti
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 const RedirectToIdentityControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const RedirectToIdentityControllerForm = (options?: RouteQueryOptions): RouteFor
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 RedirectToIdentityControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ RedirectToIdentityControllerForm.get = (options?: RouteQueryOptions): RouteFormD
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 RedirectToIdentityControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

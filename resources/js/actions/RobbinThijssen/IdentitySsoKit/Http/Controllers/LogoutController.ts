@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 const LogoutController = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ LogoutController.definition = {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 LogoutController.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ LogoutController.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 LogoutController.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ LogoutController.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 const LogoutControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const LogoutControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 LogoutControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

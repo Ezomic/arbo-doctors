@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, Link } from '@inertiajs/vue3';
 import { Pencil, Plus } from '@lucide/vue';
 import { ref } from 'vue';
 import Heading from '@/components/Heading.vue';
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { store, update } from '@/routes/medical-cases';
+import { formatDateTime } from '@/lib/date';
 
 type OpenCase = {
     id: string;
@@ -67,17 +68,17 @@ const editingCase = ref<MedicalCase | null>(null);
                 :key="medicalCase.id"
                 class="flex items-center justify-between rounded-lg border p-4"
             >
-                <div>
+                <Link :href="`/medical-cases/${medicalCase.id}`" class="min-w-0 flex-1">
                     <div class="font-medium">
                         {{ medicalCase.employee_first_name }} {{ medicalCase.employee_last_name }}
                     </div>
                     <div class="text-sm text-muted-foreground">
-                        {{ medicalCase.employer_name }} · opened {{ medicalCase.opened_at }} · {{ medicalCase.status }}
+                        {{ medicalCase.employer_name }} · opened {{ formatDateTime(medicalCase.opened_at) }} · {{ medicalCase.status }}
                     </div>
                     <div v-if="medicalCase.expected_return_date" class="mt-1 text-xs text-muted-foreground">
                         Expected return: {{ medicalCase.expected_return_date }}
                     </div>
-                </div>
+                </Link>
                 <Button variant="ghost" size="icon" aria-label="Edit medical case" @click="editingCase = medicalCase">
                     <Pencil class="size-4" />
                 </Button>

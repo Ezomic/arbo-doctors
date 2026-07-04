@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../wayfinder'
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ login.definition = {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 login.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ login.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/RedirectToIdentityController.php:34
 * @route '/login'
 */
 loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ login.form = loginForm
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 export const logout = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ logout.definition = {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 logout.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ logout.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController::__invoke
-* @see Users/robbinthijssen/Herd/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
+* @see Users/robbinthijssen/Herd/arbo-saas/identity-sso-kit/src/Http/Controllers/LogoutController.php:24
 * @route '/logout'
 */
 logoutForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

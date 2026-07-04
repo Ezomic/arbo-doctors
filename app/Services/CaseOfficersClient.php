@@ -35,6 +35,6 @@ class CaseOfficersClient extends InternalApiClient
 
     public function updateCase(string $caseId, string $tenantId, array $data): array
     {
-        return $this->put("cases/{$caseId}", [...$data, 'tenant_id' => $tenantId]);
+        return $this->patch("cases/{$caseId}", [...$data, 'tenant_id' => $tenantId]);
     }
 }
