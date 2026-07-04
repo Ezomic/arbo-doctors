@@ -72,6 +72,11 @@ class MedicalCaseController extends Controller
         $audit->log('medical_case.created', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case added — outcomes shared with Case Officers.',
+        ]);
+
         return to_route('medical-cases.index');
     }
 
@@ -145,6 +150,11 @@ class MedicalCaseController extends Controller
         $user = Auth::user();
         $audit->log($closing ? 'medical_case.closed' : 'medical_case.updated', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case updated — outcomes shared with Case Officers.',
+        ]);
 
         return to_route('medical-cases.index');
     }

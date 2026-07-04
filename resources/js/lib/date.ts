@@ -3,16 +3,16 @@ const dateTimeFormat = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month:
 
 export function formatDate(value: string | null | undefined): string {
     if (!value) {
-return '—';
-}
+        return '—';
+    }
 
     return dateFormat.format(new Date(value));
 }
 
 export function formatDateTime(value: string | null | undefined): string {
     if (!value) {
-return '—';
-}
+        return '—';
+    }
 
     return dateTimeFormat.format(new Date(value));
 }
