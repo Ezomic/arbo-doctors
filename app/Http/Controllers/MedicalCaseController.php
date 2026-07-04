@@ -65,6 +65,11 @@ class MedicalCaseController extends Controller
 
         $this->pushBack($client, $medicalCase);
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case added — outcomes shared with Case Officers.',
+        ]);
+
         return to_route('medical-cases.index');
     }
 
@@ -84,6 +89,11 @@ class MedicalCaseController extends Controller
         ]);
 
         $this->pushBack($client, $medicalCase);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case updated — outcomes shared with Case Officers.',
+        ]);
 
         return to_route('medical-cases.index');
     }
