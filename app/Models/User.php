@@ -20,10 +20,12 @@ use Illuminate\Support\Carbon;
  * @property string|null $tenant_id
  * @property array<int, array{slug: string, name: string, base_url: string, as: string}>|null $accessible_apps
  * @property Carbon|null $identity_synced_at
+ * @property Carbon|null $last_login_at
+ * @property string|null $last_login_ip
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['id', 'name', 'email', 'current_role', 'tenant_id', 'accessible_apps', 'identity_synced_at'])]
+#[Fillable(['id', 'name', 'email', 'current_role', 'tenant_id', 'accessible_apps', 'identity_synced_at', 'last_login_at', 'last_login_ip'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -43,6 +45,7 @@ class User extends Authenticatable
         return [
             'accessible_apps' => 'array',
             'identity_synced_at' => 'datetime',
+            'last_login_at' => 'datetime',
         ];
     }
 }
