@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MedicalCase;
 use App\Models\User;
+use App\Services\AuditLogger;
 use App\Services\CaseOfficersClient;
 use App\Services\NoteTypeSyncService;
 use Illuminate\Http\RedirectResponse;
@@ -15,10 +16,12 @@ use Inertia\Response;
 
 class MedicalCaseController extends Controller
 {
-    public function index(CaseOfficersClient $client): Response
+    public function index(CaseOfficersClient $client, AuditLogger $audit): Response
     {
         /** @var User $user */
         $user = Auth::user();
+
+        $audit->log('medical_case.list_viewed', $user);
 
         $medicalCases = MedicalCase::query()->latest('opened_at')->get();
         $claimedCaseIds = $medicalCases->pluck('case_id')->all();
@@ -33,12 +36,14 @@ class MedicalCaseController extends Controller
         ]);
     }
 
-    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync): Response
+    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync, AuditLogger $audit): Response
     {
         /** @var User $user */
         $user = Auth::user();
+
+        $audit->log('medical_case.viewed', $user, $medicalCase->id);
         $noteTypes = $noteTypeSync->sync($user->tenant_id);
-        $userRole  = $user->current_role ?? '';
+        $userRole = $user->current_role ?? '';
 
         $readableTypeIds = $noteTypes
             ->filter(fn ($nt) => $nt->permissionFor($userRole)?->can_read === true)
@@ -57,25 +62,25 @@ class MedicalCaseController extends Controller
             ->latest()
             ->get()
             ->map(fn ($note) => [
-                'id'             => $note->id,
-                'note_type_id'   => $note->note_type_id,
+                'id' => $note->id,
+                'note_type_id' => $note->note_type_id,
                 'note_type_name' => $note->noteType->name,
-                'body'           => $note->body,
-                'author_name'    => $note->author->name,
-                'is_mine'        => $note->user_id === $user->id,
-                'can_update'     => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_update === true,
-                'can_delete'     => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_delete === true,
-                'created_at'     => $note->created_at,
+                'body' => $note->body,
+                'author_name' => $note->author->name,
+                'is_mine' => $note->user_id === $user->id,
+                'can_update' => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_update === true,
+                'can_delete' => $note->user_id === $user->id || $note->noteType->permissionFor($userRole)?->can_delete === true,
+                'created_at' => $note->created_at,
             ]);
 
         return Inertia::render('medical-cases/Show', [
-            'medicalCase'      => $medicalCase,
-            'notes'            => $notes,
-            'writableNoteTypes'=> $writableNoteTypes->values(),
+            'medicalCase' => $medicalCase,
+            'notes' => $notes,
+            'writableNoteTypes' => $writableNoteTypes->values(),
         ]);
     }
 
-    public function store(Request $request, CaseOfficersClient $client): RedirectResponse
+    public function store(Request $request, CaseOfficersClient $client, AuditLogger $audit): RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -106,12 +111,13 @@ class MedicalCaseController extends Controller
             'expected_return_date' => $data['expected_return_date'] ?? null,
         ]);
 
+        $audit->log('medical_case.created', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
 
         return to_route('medical-cases.index');
     }
 
-    public function update(Request $request, MedicalCase $medicalCase, CaseOfficersClient $client): RedirectResponse
+    public function update(Request $request, MedicalCase $medicalCase, CaseOfficersClient $client, AuditLogger $audit): RedirectResponse
     {
         $data = $request->validate([
             'diagnosis_notes' => ['nullable', 'string'],
@@ -121,11 +127,16 @@ class MedicalCaseController extends Controller
             'status' => ['required', Rule::in(['open', 'closed'])],
         ]);
 
+        $closing = $data['status'] === 'closed' && $medicalCase->closed_at === null;
+
         $medicalCase->update([
             ...$data,
             'closed_at' => $data['status'] === 'closed' ? ($medicalCase->closed_at ?? now()) : null,
         ]);
 
+        /** @var User $user */
+        $user = Auth::user();
+        $audit->log($closing ? 'medical_case.closed' : 'medical_case.updated', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
 
         return to_route('medical-cases.index');
