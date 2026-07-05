@@ -23,16 +23,26 @@ class CaseOfficersClient extends InternalApiClient
         return config('services.case_officers.token');
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getOpenCases(string $tenantId): array
     {
         return $this->get('cases', ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getCase(string $caseId, string $tenantId): array
     {
         return $this->get("cases/{$caseId}", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
     public function updateCase(string $caseId, string $tenantId, array $data): array
     {
         return $this->put("cases/{$caseId}", [...$data, 'tenant_id' => $tenantId]);
