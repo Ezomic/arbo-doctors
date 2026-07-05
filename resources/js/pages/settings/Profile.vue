@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { Head, usePage } from '@inertiajs/vue3';
+import { ExternalLink } from '@lucide/vue';
 import { computed } from 'vue';
 import Heading from '@/components/Heading.vue';
+import { Button } from '@/components/ui/button';
 import { edit } from '@/routes/profile';
+
+defineProps<{
+    identityBaseUrl: string;
+}>();
 
 defineOptions({
     layout: {
@@ -49,5 +55,22 @@ const user = computed(() => page.props.auth.user);
                 <dd class="font-medium">{{ user.tenant_id }}</dd>
             </div>
         </dl>
+
+        <div class="border-t pt-6">
+            <p class="text-sm text-muted-foreground">
+                Passwords, two-factor authentication, and passkeys are
+                managed in Identity, not here.
+            </p>
+            <Button variant="outline" size="sm" class="mt-3" as-child>
+                <a
+                    :href="`${identityBaseUrl}/settings/security`"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <ExternalLink class="size-4" />
+                    Manage account security
+                </a>
+            </Button>
+        </div>
     </div>
 </template>
