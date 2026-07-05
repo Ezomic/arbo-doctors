@@ -23,11 +23,22 @@ jobs:
     strategy:
       matrix:
         php-version: ['8.3', '8.4', '8.5']
+    defaults:
+      run:
+        working-directory: app
 
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
+          path: app
+          persist-credentials: false
+
+      - name: Checkout identity-sso-kit
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: Ezomic/arbo-identity-sso-kit
+          path: identity-sso-kit
           persist-credentials: false
 
       - name: Setup PHP
