@@ -17,6 +17,8 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('settings/Profile');
+        return Inertia::render('settings/Profile', [
+            'identityBaseUrl' => config('sso.identity_base_url'),
+        ]);
     }
 }
