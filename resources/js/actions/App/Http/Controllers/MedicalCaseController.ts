@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::index
-* @see app/Http/Controllers/MedicalCaseController.php:17
+* @see app/Http/Controllers/MedicalCaseController.php:20
 * @route '/medical-cases'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::store
-* @see app/Http/Controllers/MedicalCaseController.php:35
+* @see app/Http/Controllers/MedicalCaseController.php:38
 * @route '/medical-cases'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::store
-* @see app/Http/Controllers/MedicalCaseController.php:35
+* @see app/Http/Controllers/MedicalCaseController.php:38
 * @route '/medical-cases'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::store
-* @see app/Http/Controllers/MedicalCaseController.php:35
+* @see app/Http/Controllers/MedicalCaseController.php:38
 * @route '/medical-cases'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::store
-* @see app/Http/Controllers/MedicalCaseController.php:35
+* @see app/Http/Controllers/MedicalCaseController.php:38
 * @route '/medical-cases'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::store
-* @see app/Http/Controllers/MedicalCaseController.php:35
+* @see app/Http/Controllers/MedicalCaseController.php:38
 * @route '/medical-cases'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -137,8 +137,113 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+export const show = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: show.url(args, options),
+    method: 'get',
+})
+
+show.definition = {
+    methods: ["get","head"],
+    url: '/medical-cases/{medicalCase}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+show.url = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { medicalCase: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { medicalCase: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            medicalCase: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        medicalCase: typeof args.medicalCase === 'object'
+        ? args.medicalCase.id
+        : args.medicalCase,
+    }
+
+    return show.definition.url
+            .replace('{medicalCase}', parsedArgs.medicalCase.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+show.get = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+show.head = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: show.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+const showForm = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+showForm.get = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\MedicalCaseController::show
+* @see app/Http/Controllers/MedicalCaseController.php:74
+* @route '/medical-cases/{medicalCase}'
+*/
+showForm.head = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\MedicalCaseController::update
-* @see app/Http/Controllers/MedicalCaseController.php:71
+* @see app/Http/Controllers/MedicalCaseController.php:107
 * @route '/medical-cases/{medicalCase}'
 */
 export const update = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -153,7 +258,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::update
-* @see app/Http/Controllers/MedicalCaseController.php:71
+* @see app/Http/Controllers/MedicalCaseController.php:107
 * @route '/medical-cases/{medicalCase}'
 */
 update.url = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions) => {
@@ -186,7 +291,7 @@ update.url = (args: { medicalCase: string | { id: string } } | [medicalCase: str
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::update
-* @see app/Http/Controllers/MedicalCaseController.php:71
+* @see app/Http/Controllers/MedicalCaseController.php:107
 * @route '/medical-cases/{medicalCase}'
 */
 update.put = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -196,7 +301,7 @@ update.put = (args: { medicalCase: string | { id: string } } | [medicalCase: str
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::update
-* @see app/Http/Controllers/MedicalCaseController.php:71
+* @see app/Http/Controllers/MedicalCaseController.php:107
 * @route '/medical-cases/{medicalCase}'
 */
 const updateForm = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +316,7 @@ const updateForm = (args: { medicalCase: string | { id: string } } | [medicalCas
 
 /**
 * @see \App\Http\Controllers\MedicalCaseController::update
-* @see app/Http/Controllers/MedicalCaseController.php:71
+* @see app/Http/Controllers/MedicalCaseController.php:107
 * @route '/medical-cases/{medicalCase}'
 */
 updateForm.put = (args: { medicalCase: string | { id: string } } | [medicalCase: string | { id: string } ] | string | { id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -226,6 +331,6 @@ updateForm.put = (args: { medicalCase: string | { id: string } } | [medicalCase:
 
 update.form = updateForm
 
-const MedicalCaseController = { index, store, update }
+const MedicalCaseController = { index, store, show, update }
 
 export default MedicalCaseController

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicalCase;
+use App\Models\MedicalNote;
+use App\Models\NoteType;
 use App\Models\User;
 use App\Services\CaseOfficersClient;
+use App\Services\NoteTypeSyncService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,6 +69,39 @@ class MedicalCaseController extends Controller
         $this->pushBack($client, $medicalCase);
 
         return to_route('medical-cases.index');
+    }
+
+    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync): Response
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $noteTypes = $noteTypeSync->sync($medicalCase->tenant_id);
+        $notes = $medicalCase->notes()->with(['noteType', 'author'])->oldest()->get();
+
+        return Inertia::render('medical-cases/Show', [
+            'medicalCase' => $medicalCase,
+            'notes' => $notes->map(function (MedicalNote $note) use ($user) {
+                $permission = $note->noteType->permissionFor($user->current_role ?? '');
+                $isMine = $note->user_id === $user->id;
+
+                return [
+                    'id' => $note->id,
+                    'note_type_id' => $note->note_type_id,
+                    'note_type_name' => $note->noteType->name,
+                    'body' => $note->body,
+                    'author_name' => $note->author->name,
+                    'is_mine' => $isMine,
+                    'can_update' => $isMine || $permission?->can_update === true,
+                    'can_delete' => $isMine || $permission?->can_delete === true,
+                    'created_at' => $note->created_at,
+                ];
+            }),
+            'writableNoteTypes' => $noteTypes
+                ->filter(fn (NoteType $noteType) => $noteType->permissionFor($user->current_role ?? '')?->can_write === true)
+                ->map(fn (NoteType $noteType) => ['id' => $noteType->id, 'name' => $noteType->name])
+                ->values(),
+        ]);
     }
 
     public function update(Request $request, MedicalCase $medicalCase, CaseOfficersClient $client): RedirectResponse
