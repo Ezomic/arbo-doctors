@@ -2,24 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ApiClient;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $client = ApiClient::query()->firstOrCreate(['name' => 'admin-service']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $token = $client->createToken('admin-service', ['audit-logs:read'])->plainTextToken;
+
+        $this->command->info("admin-service token (put in admin/.env as DOCTORS_SERVICE_TOKEN):\n{$token}");
     }
 }
