@@ -6,6 +6,7 @@ use App\Models\MedicalCase;
 use App\Models\MedicalNote;
 use App\Models\NoteType;
 use App\Models\User;
+use App\Services\AuditLogger;
 use App\Services\CaseOfficersClient;
 use App\Services\NoteTypeSyncService;
 use Illuminate\Http\RedirectResponse;
@@ -17,10 +18,12 @@ use Inertia\Response;
 
 class MedicalCaseController extends Controller
 {
-    public function index(CaseOfficersClient $client): Response
+    public function index(CaseOfficersClient $client, AuditLogger $audit): Response
     {
         /** @var User $user */
         $user = Auth::user();
+
+        $audit->log('medical_case.list_viewed', $user);
 
         $medicalCases = MedicalCase::query()->latest('opened_at')->get();
         $claimedCaseIds = $medicalCases->pluck('case_id')->all();
@@ -35,7 +38,7 @@ class MedicalCaseController extends Controller
         ]);
     }
 
-    public function store(Request $request, CaseOfficersClient $client): RedirectResponse
+    public function store(Request $request, CaseOfficersClient $client, AuditLogger $audit): RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -66,23 +69,41 @@ class MedicalCaseController extends Controller
             'expected_return_date' => $data['expected_return_date'] ?? null,
         ]);
 
+        $audit->log('medical_case.created', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case added — outcomes shared with Case Officers.',
+        ]);
 
         return to_route('medical-cases.index');
     }
 
-    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync): Response
+    public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync, AuditLogger $audit): Response
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $noteTypes = $noteTypeSync->sync($medicalCase->tenant_id);
-        $notes = $medicalCase->notes()->with(['noteType', 'author'])->oldest()->get();
+        $audit->log('medical_case.viewed', $user, $medicalCase->id);
 
-        return Inertia::render('medical-cases/Show', [
-            'medicalCase' => $medicalCase,
-            'notes' => $notes->map(function (MedicalNote $note) use ($user) {
-                $permission = $note->noteType->permissionFor($user->current_role ?? '');
+        $noteTypes = $noteTypeSync->sync($medicalCase->tenant_id);
+        $userRole = $user->current_role ?? '';
+
+        $readableTypeIds = $noteTypes
+            ->filter(fn (NoteType $nt) => $nt->permissionFor($userRole)?->can_read === true)
+            ->pluck('id');
+
+        $notes = $medicalCase->notes()
+            ->with(['noteType:id,name', 'author:id,name'])
+            ->where(fn ($q) => $q
+                ->whereIn('note_type_id', $readableTypeIds)
+                ->orWhere('user_id', $user->id)
+            )
+            ->oldest()
+            ->get()
+            ->map(function (MedicalNote $note) use ($user, $userRole) {
+                $permission = $note->noteType->permissionFor($userRole);
                 $isMine = $note->user_id === $user->id;
 
                 return [
@@ -96,15 +117,19 @@ class MedicalCaseController extends Controller
                     'can_delete' => $isMine || $permission?->can_delete === true,
                     'created_at' => $note->created_at,
                 ];
-            }),
+            });
+
+        return Inertia::render('medical-cases/Show', [
+            'medicalCase' => $medicalCase,
+            'notes' => $notes,
             'writableNoteTypes' => $noteTypes
-                ->filter(fn (NoteType $noteType) => $noteType->permissionFor($user->current_role ?? '')?->can_write === true)
+                ->filter(fn (NoteType $noteType) => $noteType->permissionFor($userRole)?->can_write === true)
                 ->map(fn (NoteType $noteType) => ['id' => $noteType->id, 'name' => $noteType->name])
                 ->values(),
         ]);
     }
 
-    public function update(Request $request, MedicalCase $medicalCase, CaseOfficersClient $client): RedirectResponse
+    public function update(Request $request, MedicalCase $medicalCase, CaseOfficersClient $client, AuditLogger $audit): RedirectResponse
     {
         $data = $request->validate([
             'diagnosis_notes' => ['nullable', 'string'],
@@ -114,12 +139,22 @@ class MedicalCaseController extends Controller
             'status' => ['required', Rule::in(['open', 'closed'])],
         ]);
 
+        $closing = $data['status'] === 'closed' && $medicalCase->closed_at === null;
+
         $medicalCase->update([
             ...$data,
             'closed_at' => $data['status'] === 'closed' ? ($medicalCase->closed_at ?? now()) : null,
         ]);
 
+        /** @var User $user */
+        $user = Auth::user();
+        $audit->log($closing ? 'medical_case.closed' : 'medical_case.updated', $user, $medicalCase->id);
         $this->pushBack($client, $medicalCase);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Medical case updated — outcomes shared with Case Officers.',
+        ]);
 
         return to_route('medical-cases.index');
     }

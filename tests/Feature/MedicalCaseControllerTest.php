@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AuditLog;
 use App\Models\MedicalCase;
 use App\Models\NoteType;
 use App\Models\User;
@@ -38,4 +39,6 @@ test('show renders notes and only the writable note types for the user role', fu
         ->has('writableNoteTypes', 1)
         ->where('writableNoteTypes.0.id', $writableType->id)
     );
+
+    expect(AuditLog::query()->where('subject_id', $medicalCase->id)->where('action', 'medical_case.viewed')->exists())->toBeTrue();
 });
