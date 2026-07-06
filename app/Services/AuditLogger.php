@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AuditLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use RuntimeException;
 
 class AuditLogger
 {
@@ -21,7 +22,12 @@ class AuditLogger
             'ip_address' => $this->request->ip(),
         ];
 
-        $data['checksum'] = hash_hmac('sha256', json_encode($data), config('app.key'));
+        $encoded = json_encode($data);
+        if ($encoded === false) {
+            throw new RuntimeException('Failed to encode audit log entry for checksum computation.');
+        }
+
+        $data['checksum'] = hash_hmac('sha256', $encoded, config('app.key'));
 
         AuditLog::create($data);
     }
