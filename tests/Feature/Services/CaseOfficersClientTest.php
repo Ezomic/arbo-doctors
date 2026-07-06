@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 test('updateCase pushes the outcome via PATCH, not PUT', function () {
+    config(['services.case_officers.token' => 'test-token']);
+
     $caseId = (string) Str::uuid();
     $tenantId = (string) Str::uuid();
 
