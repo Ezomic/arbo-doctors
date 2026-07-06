@@ -40,4 +40,9 @@ return [
         'token' => env('CASE_OFFICERS_SERVICE_TOKEN'),
     ],
 
+    'admin' => [
+        'base_url' => env('ADMIN_BASE_URL', 'https://admin.test'),
+        'token' => env('ADMIN_SERVICE_TOKEN'),
+    ],
+
 ];

@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Carbon\CarbonImmutable;
+use Database\Factories\MedicalCaseFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use RobbinThijssen\IdentitySsoKit\Concerns\HasTenantScope;
 use RobbinThijssen\IdentitySsoKit\Concerns\HasUuidPrimaryKey;
 
@@ -30,7 +33,8 @@ use RobbinThijssen\IdentitySsoKit\Concerns\HasUuidPrimaryKey;
 ])]
 class MedicalCase extends Model
 {
-    use HasTenantScope, HasUuidPrimaryKey;
+    /** @use HasFactory<MedicalCaseFactory> */
+    use HasFactory, HasTenantScope, HasUuidPrimaryKey;
 
     protected function casts(): array
     {
@@ -40,5 +44,13 @@ class MedicalCase extends Model
             'expected_return_date' => 'date',
             'diagnosis_notes' => 'encrypted',
         ];
+    }
+
+    /**
+     * @return HasMany<MedicalNote, $this>
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(MedicalNote::class);
     }
 }
