@@ -20,6 +20,8 @@ class MedicalCaseController extends Controller
 {
     public function index(CaseOfficersClient $client, AuditLogger $audit): Response
     {
+        $this->authorize('view-medical-cases');
+
         /** @var User $user */
         $user = Auth::user();
 
@@ -40,6 +42,8 @@ class MedicalCaseController extends Controller
 
     public function store(Request $request, CaseOfficersClient $client, AuditLogger $audit): RedirectResponse
     {
+        $this->authorize('manage-medical-cases');
+
         /** @var User $user */
         $user = Auth::user();
 
@@ -82,6 +86,8 @@ class MedicalCaseController extends Controller
 
     public function show(MedicalCase $medicalCase, NoteTypeSyncService $noteTypeSync, AuditLogger $audit): Response
     {
+        $this->authorize('view-medical-cases');
+
         /** @var User $user */
         $user = Auth::user();
 
@@ -140,6 +146,8 @@ class MedicalCaseController extends Controller
         ]);
 
         $closing = $data['status'] === 'closed' && $medicalCase->closed_at === null;
+
+        $this->authorize($closing ? 'close-medical-cases' : 'manage-medical-cases');
 
         $medicalCase->update([
             ...$data,
