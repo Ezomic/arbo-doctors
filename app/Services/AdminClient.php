@@ -23,4 +23,14 @@ class AdminClient extends InternalApiClient
     {
         return $this->get('note-types', ['tenant_id' => $tenantId, 'app_slug' => 'doctors']);
     }
+
+    /** @return list<string> */
+    public function getRolePermissions(string $tenantId, string $roleName): array
+    {
+        return array_values($this->get('role-permissions', [
+            'tenant_id' => $tenantId,
+            'role_name' => $roleName,
+            'app_slug' => 'doctors',
+        ]));
+    }
 }
