@@ -5,6 +5,38 @@ use Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------
+| Vite Build Freshness Guard
+|--------------------------------------------------------------------------
+|
+| A stale or missing public/build/manifest.json makes Inertia::render() throw
+| "Unable to locate file in Vite manifest", which Laravel's exception handler
+| turns into a full HTML error page instead of a valid Inertia response — this
+| reads exactly like a controller/auth bug. CI always runs `npm run build`
+| before the test suite, so this only guards local runs. See ARBO-88.
+|
+*/
+
+(function (): void {
+    $manifest = __DIR__.'/../public/build/manifest.json';
+
+    if (! file_exists($manifest)) {
+        throw new RuntimeException('Vite build is missing (public/build/manifest.json not found). Run `npm run build` before running tests — otherwise Inertia::render() fails with a misleading error. See ARBO-88.');
+    }
+
+    $manifestTime = filemtime($manifest);
+    $sourceFiles = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator(__DIR__.'/../resources/js', FilesystemIterator::SKIP_DOTS)
+    );
+
+    foreach ($sourceFiles as $file) {
+        if ($file->getMTime() > $manifestTime) {
+            throw new RuntimeException('Vite build is stale (resources/js has changes newer than public/build/manifest.json). Run `npm run build` before running tests — otherwise Inertia::render() fails with a misleading error. See ARBO-88.');
+        }
+    }
+})();
+
+/*
+|--------------------------------------------------------------------------
 | Test Case
 |--------------------------------------------------------------------------
 |
